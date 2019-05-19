@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/bbcsports_fragment"
+            android:icon="@drawable/ic_bbcsports"
+            android:title="@string/bbc_sports" />
+        <item
+            android:id="@+id/talksports_fragment"
+            android:icon="@drawable/ic_talksports"
+            android:title="@string/talk_sports" />
+        <item
+            android:id="@+id/foxsports_fragment"
+            android:icon="@drawable/ic_foxsports"
+            android:title="@string/fox_sports" />
+    </group>
+</menu>

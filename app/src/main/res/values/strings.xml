@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SportNews</string>
+    <string name="bbc_sports">BBCSports</string>
+    <string name="talk_sports">TalkSports</string>
+    <string name="fox_sports">FoxSports</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+</resources>
