@@ -2,8 +2,6 @@ package edgar.yodgorbek.sportnews.module;
 
 import android.content.Context;
 
-
-
 import dagger.Module;
 import dagger.Provides;
 import edgar.yodgorbek.sportnews.qualifier.ActivityContext;

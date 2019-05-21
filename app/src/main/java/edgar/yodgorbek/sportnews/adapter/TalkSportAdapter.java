@@ -28,6 +28,7 @@ import edgar.yodgorbek.sportnews.R;
 import edgar.yodgorbek.sportnews.detail.DetailActivity;
 import edgar.yodgorbek.sportnews.model.Article;
 import edgar.yodgorbek.sportnews.model.TalkSports;
+
 public class TalkSportAdapter extends RecyclerView.Adapter<edgar.yodgorbek.sportnews.adapter.TalkSportAdapter.CustomViewHolder> {
 
     public static final String urlKey = "urlKey";

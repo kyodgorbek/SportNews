@@ -9,6 +9,6 @@ import edgar.yodgorbek.sportnews.model.Source;
 
 @TypeConverters(SourceTypeConverter.class)
 @Database(entities = {Article.class, Source.class}, version = 1, exportSchema = false)
-public  abstract class SportNewsDatabase extends RoomDatabase {
-    public  abstract SportNewsDao sportNewsDao();
+public abstract class SportNewsDatabase extends RoomDatabase {
+    public abstract SportNewsDao sportNewsDao();
 }

@@ -1,6 +1,5 @@
 package edgar.yodgorbek.sportnews.adapter;
 
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -27,9 +26,10 @@ import butterknife.ButterKnife;
 import edgar.yodgorbek.sportnews.R;
 import edgar.yodgorbek.sportnews.detail.DetailActivity;
 import edgar.yodgorbek.sportnews.model.Article;
-import edgar.yodgorbek.sportnews.model.SportNews;
+import edgar.yodgorbek.sportnews.model.FootballItalia;
 
-public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomViewHolder> {
+
+public class FootballItaliaAdapter extends RecyclerView.Adapter<FootballItaliaAdapter.CustomViewHolder> {
 
     public static final String urlKey = "urlKey";
     List<Article> articles;
@@ -38,24 +38,22 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
     private ClipData myClip;
 
 
-    public ArticleAdapter(List<Article> articles, SportNews sportNews) {
+    public FootballItaliaAdapter(List<Article> articles, FootballItalia footballItalia) {
         this.articles = articles;
 
 
     }
 
-    public ArticleAdapter(ClickListener clickListener) {
-    }
 
     @NonNull
     @Override
-    public ArticleAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article_list, null);
-        return new ArticleAdapter.CustomViewHolder(itemView);
+    public FootballItaliaAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.footballitalia_list, null);
+        return new FootballItaliaAdapter.CustomViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull edgar.yodgorbek.sportnews.adapter.ArticleAdapter.CustomViewHolder customViewHolder, int position) {
+    public void onBindViewHolder(@NonNull CustomViewHolder customViewHolder, int position) {
         Article article = articles.get(position);
         SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
@@ -111,8 +109,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
         return articles.size();
     }
 
-    public interface ClickListener {
-    }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.articleAuthor)
@@ -135,6 +131,5 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
 
         }
     }
-
-
 }
+

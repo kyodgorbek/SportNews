@@ -13,5 +13,10 @@
             android:id="@+id/foxsports_fragment"
             android:icon="@drawable/ic_foxsports"
             android:title="@string/fox_sports" />
+
+        <item
+            android:id="@+id/footballitalia_fragment"
+            android:icon="@drawable/ic_footballitalia"
+            android:title="@string/fox_sports" />
     </group>
 </menu>

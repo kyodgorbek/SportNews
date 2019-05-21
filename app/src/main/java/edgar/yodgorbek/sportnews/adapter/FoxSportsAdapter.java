@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

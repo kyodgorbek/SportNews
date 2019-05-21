@@ -19,6 +19,7 @@ public interface SportNewsDao {
 
     @Insert
     void insertAll(Article... article);
+
     @Delete
     void delete(Article... article);
 

@@ -23,24 +23,7 @@ public class Article {
     @SerializedName("source")
     @Expose
     private Source source;
-
-    public int getSource_id() {
-        return source_id;
-    }
-
-    public void setSource_id(int source_id) {
-        this.source_id = source_id;
-    }
-
     private int source_id;
-    public Source getSource() {
-        return source;
-    }
-
-    public void setSource(Source source) {
-        this.source = source;
-    }
-
     @SerializedName("author")
     @Expose
     @ColumnInfo(name = "author")
@@ -61,7 +44,6 @@ public class Article {
     @Expose
     @ColumnInfo(name = "urlToImage")
     private String urlToImage;
-
     @SerializedName("publishedAt")
     @Expose
     @ColumnInfo(name = "publishedAt")
@@ -71,9 +53,21 @@ public class Article {
     @ColumnInfo(name = "content")
     private String content;
 
+    public int getSource_id() {
+        return source_id;
+    }
 
+    public void setSource_id(int source_id) {
+        this.source_id = source_id;
+    }
 
+    public Source getSource() {
+        return source;
+    }
 
+    public void setSource(Source source) {
+        this.source = source;
+    }
 
     public String getAuthor() {
         return author;
