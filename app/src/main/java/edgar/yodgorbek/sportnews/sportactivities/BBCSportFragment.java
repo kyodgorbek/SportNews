@@ -1,6 +1,6 @@
 package edgar.yodgorbek.sportnews.sportactivities;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +38,7 @@ import retrofit2.Response;
 
 public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickListener {
 
-    public List<Article> articleList = new ArrayList<Article>();
+    public List<Article> articleList = new ArrayList<>();
     @ActivityContext
     public Context activityContext;
     @ApplicationContext
@@ -61,17 +61,17 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
         call.enqueue(new Callback<SportNews>() {
             @Override
             public void onResponse(Call<SportNews> call, Response<SportNews> response) {
-                if (response != null) {
+                if (response == null) {
                     sportNews = response.body();
                     if (sportNews != null && sportNews.getArticles() != null) {
                         articleList.addAll(sportNews.getArticles());
                     }
                     articleAdapter = new ArticleAdapter(articleList, sportNews);
                     ApplicationComponent applicationComponent;
-                    applicationComponent = MyApplication.get(Objects.requireNonNull(getActivity())).getApplicationComponent();
+                    applicationComponent = (ApplicationComponent) MyApplication.get(Objects.requireNonNull(getActivity())).getApplicationContext();
                     bbcSportFragmentComponent = (BBCSportFragmentComponent) DaggerApplicationComponent.builder().contextModule(new ContextModule(getContext())).build();
                     bbcSportFragmentComponent.injectBBCSportFragment(BBCSportFragment.this);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(applicationComponent));
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(articleAdapter);
                 }
@@ -87,6 +87,10 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
         return view;
 
 
+    }
+
+    private Context getContext(ApplicationComponent applicationComponent) {
+        return null;
     }
 }
 

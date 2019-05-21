@@ -1,10 +1,8 @@
-<android.support.constraint.ConstraintLayoutandroid.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorWhite">
-    android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorWhite"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <android.support.constraint.Guideline
@@ -81,4 +79,4 @@ android:src="@drawable/ic_bookmark"
 app:layout_constraintBottom_toBottomOf="@id/articleShare"
 app:layout_constraintStart_toEndOf="@id/articleShare"
 app:layout_constraintTop_toTopOf="@id/articleShare" />
-    </android.support.constraint.ConstraintLayoutandroid.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
