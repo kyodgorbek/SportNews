@@ -18,5 +18,8 @@ public interface SportInterface {
     @GET("/v2/top-headlines?sources=football-italia&apiKey=d03441ae1be44f9cad8c38a2fa6db215")
     Call<FootballItalia> getFootballItaliaArticles();
 
+    @GET("/v2/top-headlines?sources=espn&apiKey=d03441ae1be44f9cad8c38a2fa6db215")
+    Call<Espn> getEspnArticles();
+
 
 }
