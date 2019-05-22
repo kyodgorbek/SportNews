@@ -32,7 +32,7 @@ import edgar.yodgorbek.sportnews.model.Espn;
 public class EspnAdapter extends RecyclerView.Adapter<EspnAdapter.CustomViewHolder> {
 
     public static final String urlKey = "urlKey";
-    public List<Article> articles = new ArrayList<>();
+    public List<Article> articles;
     Espn espnNews;
 
     private ClipboardManager myClipboard;

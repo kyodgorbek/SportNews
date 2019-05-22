@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import edgar.yodgorbek.sportnews.sportactivities.BBCSportFragment;
+import edgar.yodgorbek.sportnews.sportactivities.ESPNFragment;
 import edgar.yodgorbek.sportnews.sportactivities.FootballItaliaFragment;
 import edgar.yodgorbek.sportnews.sportactivities.FoxSportsFragment;
 import edgar.yodgorbek.sportnews.sportactivities.TalkSportsFragment;
@@ -94,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.footballitalia_fragment:
                 fragmentClass = FootballItaliaFragment.class;
+                break;
+
+            case R.id.espn_fragment:
+                fragmentClass = ESPNFragment.class;
                 break;
 
             default:
