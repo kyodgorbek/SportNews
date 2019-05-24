@@ -20,7 +20,7 @@
             android:title="@string/footbal_italia" />
         <item
             android:id="@+id/espn_fragment"
-            android:icon="@drawable/ic_foxsports"
+            android:icon="@drawable/ic_espn"
             android:title="@string/espn" />
 
     </group>
