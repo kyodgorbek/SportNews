@@ -19,20 +19,15 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:layout_marginTop="32dp"
-            tools:ignore="ContentDescription" />
 
         <WebView
             android:id="@+id/webView"
+            android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView" />
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar" />
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.CollapsingToolbarLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -22,8 +22,7 @@ public class DetailActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.imageView)
-    ImageView imageView;
+
     @BindView(R.id.webView)
     WebView webView;
 
@@ -38,7 +37,6 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         String imageUrl = getIntent().getExtras().getString("imageKey");
-        Picasso.get().load(imageUrl).into(imageView);
 
         webView.getSettings().setJavaScriptEnabled(true);
         String url = getIntent().getExtras().getString("urlKey");
