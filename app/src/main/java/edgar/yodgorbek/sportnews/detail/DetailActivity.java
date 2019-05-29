@@ -2,7 +2,10 @@ package edgar.yodgorbek.sportnews.detail;
 
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
@@ -26,7 +29,7 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.webView)
     WebView webView;
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "ResourceType"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +39,8 @@ public class DetailActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        String imageUrl = getIntent().getExtras().getString("imageKey");
+        toolbar.setBackgroundResource(R.color.colorBlue);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_white);
 
         webView.getSettings().setJavaScriptEnabled(true);
         String url = getIntent().getExtras().getString("urlKey");
