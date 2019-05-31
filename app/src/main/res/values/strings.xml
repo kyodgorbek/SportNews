@@ -5,6 +5,7 @@
     <string name="fox_sports">Fox-Sports</string>
     <string name="footbal_italia">Football ITALIA</string>
     <string name="espn">ESPN</string>
+    <string name="search_hint"> search news</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 

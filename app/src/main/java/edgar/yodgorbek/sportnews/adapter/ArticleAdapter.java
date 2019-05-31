@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import edgar.yodgorbek.sportnews.R;
 import edgar.yodgorbek.sportnews.detail.DetailActivity;
 import edgar.yodgorbek.sportnews.model.Article;
+import edgar.yodgorbek.sportnews.model.Search;
 import edgar.yodgorbek.sportnews.model.SportNews;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomViewHolder> {
@@ -45,6 +46,9 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
     }
 
     public ArticleAdapter(ClickListener clickListener) {
+    }
+
+    public ArticleAdapter(List<Article> articleList, Search search) {
     }
 
     @NonNull

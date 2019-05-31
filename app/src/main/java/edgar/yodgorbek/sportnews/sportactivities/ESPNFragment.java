@@ -63,5 +63,7 @@ public class ESPNFragment extends Fragment {
         return view;
     }
 
+    public static void doFilter(String searchQuery) {
 
+    }
 }

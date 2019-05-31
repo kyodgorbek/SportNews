@@ -63,4 +63,8 @@ public class FootballItaliaFragment extends Fragment {
 
         return view;
     }
+
+    public static void doFilter(String searchQuery) {
+
+    }
 }

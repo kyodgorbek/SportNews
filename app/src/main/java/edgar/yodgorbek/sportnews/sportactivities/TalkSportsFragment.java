@@ -64,4 +64,8 @@ public class TalkSportsFragment extends Fragment {
 
     }
 
+    public static void doFilter(String searchQuery) {
+
+    }
+
 }

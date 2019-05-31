@@ -62,4 +62,8 @@ public class FoxSportsFragment extends Fragment {
 
 
     }
+
+    public static void doFilter(String searchQuery) {
+
+    }
 }

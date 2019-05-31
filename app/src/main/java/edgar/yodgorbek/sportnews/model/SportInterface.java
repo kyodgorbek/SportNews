@@ -2,6 +2,7 @@ package edgar.yodgorbek.sportnews.model;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface SportInterface {
 
@@ -20,6 +21,9 @@ public interface SportInterface {
 
     @GET("/v2/top-headlines?sources=espn&apiKey=d03441ae1be44f9cad8c38a2fa6db215")
     Call<Espn> getEspnArticles();
+
+    @GET("/v2/everything?apiKey=d03441ae1be44f9cad8c38a2fa6db215")
+    Call<Search> getSearchViewArticles(@Query("q") String q);
 
 
 }

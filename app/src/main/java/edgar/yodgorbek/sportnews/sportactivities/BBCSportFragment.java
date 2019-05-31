@@ -18,12 +18,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import edgar.yodgorbek.sportnews.R;
 import edgar.yodgorbek.sportnews.adapter.ArticleAdapter;
+import edgar.yodgorbek.sportnews.adapter.EspnAdapter;
 import edgar.yodgorbek.sportnews.component.ApplicationComponent;
 import edgar.yodgorbek.sportnews.component.BBCSportFragmentComponent;
 import edgar.yodgorbek.sportnews.component.DaggerApplicationComponent;
 import edgar.yodgorbek.sportnews.component.MyApplication;
 import edgar.yodgorbek.sportnews.internet.SportClient;
 import edgar.yodgorbek.sportnews.model.Article;
+import edgar.yodgorbek.sportnews.model.Search;
 import edgar.yodgorbek.sportnews.model.SportInterface;
 import edgar.yodgorbek.sportnews.model.SportNews;
 import edgar.yodgorbek.sportnews.module.BBCFragmentContextModule;
@@ -40,6 +42,7 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
     public List<Article> articleList = new ArrayList<>();
     @ActivityContext
     public Context activityContext;
+    Search search;
     @ApplicationContext
     public Context mContext;
 
@@ -83,6 +86,30 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
         });
 
 
+        SportInterface searchInterface = SportClient.getApiService();
+        Call<Search> searchCall = sportInterface.getSearchViewArticles("q");
+         searchCall.enqueue(new Callback<Search>() {
+             @Override
+             public void onResponse(Call<Search> call, Response<Search> response) {
+                 search = response.body();
+
+                 if (search != null && search.getArticles() != null) {
+                     articleList.addAll(search.getArticles());
+                 }
+
+                 articleAdapter = new ArticleAdapter(articleList, search);
+                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                 recyclerView.setLayoutManager(layoutManager);
+                 recyclerView.setAdapter(articleAdapter);
+             }
+
+             @Override
+             public void onFailure(Call<Search> call, Throwable t) {
+
+             }
+         });
+
+
         return view;
 
 
@@ -90,6 +117,10 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
 
     private Context getContext(ApplicationComponent applicationComponent) {
         return null;
+    }
+
+    public static void doFilter(String searchQuery) {
+
     }
 }
 
