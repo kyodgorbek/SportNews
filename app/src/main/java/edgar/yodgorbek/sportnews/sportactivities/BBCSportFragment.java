@@ -39,7 +39,8 @@ import retrofit2.Response;
 
 public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickListener {
 
-    public List<Article> articleList = new ArrayList<>();
+    public static List<Article> articleList = new ArrayList<>();
+    public List<Search> searchList = new ArrayList<>();
     @ActivityContext
     public Context activityContext;
     Search search;
@@ -51,7 +52,7 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
     BBCSportFragmentComponent bbcSportFragmentComponent;
     BBCFragmentContextModule bbcFragmentContextModule;
     private SportNews sportNews;
-    private ArticleAdapter articleAdapter;
+    private static ArticleAdapter articleAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,6 +121,9 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
     }
 
     public static void doFilter(String searchQuery) {
+     articleList.clear();
+
+     articleAdapter.notifyDataSetChanged();
 
     }
 }
