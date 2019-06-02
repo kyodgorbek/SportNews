@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int MENU_THIRD = 2;
     public static final int MENU_FOURTH = 3;
     public static final int MENU_FIFTH = 3;
+    public static final String TAG = "crash";
 
 
     // Action bar search widget
@@ -91,56 +93,53 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
         // Getting search action from action bar and setting up search view
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView)searchItem.getActionView();
+        SearchView searchView = (SearchView) searchItem.getActionView();
 
         // Setup searchView
-        setupSearchView(searchItem);
-
+        setupSearchView(searchView);
+        Log.e(TAG,"crash");
         return true;
     }
 
-    private void setupSearchView(MenuItem searchItem)
-    {
+    public void setupSearchView(SearchView searchView) {
         SearchManager searchManager = (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
-        if (searchManager != null)
-        {
+        if (searchManager != null) {
             SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
             searchView.setSearchableInfo(info);
         }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextChange(String newText)
-            {
+            public boolean onQueryTextChange(String newText) {
                 searchQuery = newText;
 
                 // Load search data on respective fragment
-                if(mActiveMenu == MENU_FIRST)   // First
+                if (mActiveMenu == MENU_FIRST)   // First
                 {
                     BBCSportFragment.doFilter(newText);
                 }
 
-                if(mActiveMenu == MENU_SECOND)   // First
+                if (mActiveMenu == MENU_SECOND)   // First
                 {
                     BBCSportFragment.doFilter(newText);
                 }
 
-                if(mActiveMenu == MENU_THIRD)   // First
+                if (mActiveMenu == MENU_THIRD)   // First
                 {
                     BBCSportFragment.doFilter(newText);
                 }
 
-                if(mActiveMenu == MENU_FOURTH)   // First
+                if (mActiveMenu == MENU_FOURTH)   // First
                 {
                     BBCSportFragment.doFilter(newText);
-                }
-                else if(mActiveMenu == MENU_FIFTH) // Second
+                } else if (mActiveMenu == MENU_FIFTH) // Second
                 {
                     ESPNFragment.doFilter(newText);
                 }

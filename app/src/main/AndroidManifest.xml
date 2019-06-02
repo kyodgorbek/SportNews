@@ -27,7 +27,7 @@
         <activity android:name=".detail.DetailActivity" />
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="aa34578052122e6724e8bca9a7766bc012923b95" />
+            android:value="4ce03a6d6eb471237621bb0efc25b4d5874ceaf0" />
     </application>
 
 </manifest>

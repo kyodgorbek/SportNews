@@ -87,7 +87,7 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
 
 
         SportInterface searchInterface = SportClient.getApiService();
-        Call<Search> searchCall = sportInterface.getSearchViewArticles("q");
+        Call<Search> searchCall = searchInterface.getSearchViewArticles("q");
          searchCall.enqueue(new Callback<Search>() {
              @Override
              public void onResponse(Call<Search> call, Response<Search> response) {
