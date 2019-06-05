@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,8 +62,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.CustomVi
     @Override
     public void onBindViewHolder(@NonNull edgar.yodgorbek.sportnews.adapter.ArticleAdapter.CustomViewHolder customViewHolder, int position) {
         Article article = articles.get(position);
-        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+        SimpleDateFormat output = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
         Date d = new Date();
         try {

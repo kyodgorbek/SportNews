@@ -1,6 +1,7 @@
 package edgar.yodgorbek.sportnews.sportactivities;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +20,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import edgar.yodgorbek.sportnews.R;
 import edgar.yodgorbek.sportnews.adapter.ArticleAdapter;
-import edgar.yodgorbek.sportnews.adapter.EspnAdapter;
+
 import edgar.yodgorbek.sportnews.component.ApplicationComponent;
 import edgar.yodgorbek.sportnews.component.BBCSportFragmentComponent;
-import edgar.yodgorbek.sportnews.component.DaggerApplicationComponent;
-import edgar.yodgorbek.sportnews.component.MyApplication;
+
+
 import edgar.yodgorbek.sportnews.internet.SportClient;
 import edgar.yodgorbek.sportnews.model.Article;
 import edgar.yodgorbek.sportnews.model.Search;
@@ -39,13 +41,13 @@ import retrofit2.Response;
 
 public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickListener {
 
-    public static List<Article> articleList = new ArrayList<>();
+    public List<Article> articleList = new ArrayList<>();
 
-    public static List<Article> origArticleList = new ArrayList<>();
+    public List<Article> origArticleList = new ArrayList<>();
 
     @ActivityContext
     public Context activityContext;
-    Search search;
+    private Search search;
     @ApplicationContext
     public Context mContext;
 
@@ -54,7 +56,8 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
     BBCSportFragmentComponent bbcSportFragmentComponent;
     BBCFragmentContextModule bbcFragmentContextModule;
     private SportNews sportNews;
-    private static ArticleAdapter articleAdapter;
+    private ArticleAdapter articleAdapter;
+    private SportInterface apiInterface;
 
 
     @Override
@@ -62,81 +65,89 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bbcsport, container, false);
         ButterKnife.bind(this, view);
-        SportInterface sportInterface = SportClient.getApiService();
-        Call<SportNews> call = sportInterface.getArticles();
+
+        articleAdapter = new ArticleAdapter(articleList, sportNews);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(/*applicationComponent*/));
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(articleAdapter);
+
+        apiInterface = SportClient.getApiService();
+
+        fetchInitialArticles();
+
+        return view;
+    }
+
+    private void fetchInitialArticles() {
+        ProgressDialog progress = new ProgressDialog(getContext());
+        progress.setMessage("Loading... ");
+        progress.setIndeterminate(true);
+        progress.show();
+        Call<SportNews> call = apiInterface.getArticles();
         call.enqueue(new Callback<SportNews>() {
             @Override
             public void onResponse(Call<SportNews> call, Response<SportNews> response) {
-                if (response == null) {
+                if (response.body() != null) {
                     sportNews = response.body();
-                    if (sportNews != null && sportNews.getArticles() != null) {
+                    if (sportNews.getArticles() != null) {
+                        articleList.clear();
                         articleList.addAll(sportNews.getArticles());
-
                     }
-                    articleAdapter = new ArticleAdapter(articleList, sportNews);
-                    ApplicationComponent applicationComponent;
-                    applicationComponent = (ApplicationComponent) MyApplication.get(Objects.requireNonNull(getActivity())).getApplicationContext();
-                    bbcSportFragmentComponent = (BBCSportFragmentComponent) DaggerApplicationComponent.builder().contextModule(new ContextModule(getContext())).build();
-                    bbcSportFragmentComponent.injectBBCSportFragment(BBCSportFragment.this);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(applicationComponent));
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(articleAdapter);
+                    articleAdapter.notifyDataSetChanged();
                 }
+                progress.dismiss();
             }
 
             @Override
             public void onFailure(Call<SportNews> call, Throwable t) {
-
+                progress.dismiss();
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-//        SportInterface searchInterface = SportClient.getApiService();
-//        Call<Search> searchCall = searchInterface.getSearchViewArticles("q");
-//        searchCall.enqueue(new Callback<Search>() {
-//            @Override
-//            public void onResponse(Call<Search> call, Response<Search> response) {
-//                search = response.body();
-//
-//                if (search != null && search.getArticles() != null) {
-//                    articleList.clear();
-//                    articleList.addAll(search.getArticles());
-//                }
-//
-//                if(articleAdapter != null){
-//                    articleAdapter.notifyDataSetChanged();
-//                } else {
-//                    articleAdapter = new ArticleAdapter(articleList, search);
-//                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//                    recyclerView.setLayoutManager(layoutManager);
-//                    recyclerView.setAdapter(articleAdapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Search> call, Throwable t) {
-//
-//            }
-//        });
-
-        return view;
-
-
     }
 
     private Context getContext(ApplicationComponent applicationComponent) {
         return null;
     }
 
-    public static void doFilter(String searchQuery) {
-        searchQuery = searchQuery.toLowerCase();
-        for (Article article : origArticleList) {
-            final String text = article.getTitle();
-            if (text.equals(searchQuery))
-                articleList.add(article);
-        }
-        articleAdapter.notifyDataSetChanged();
+    public void doFilter(String searchQuery) {
+        searchAPICall(searchQuery);
+
     }
 
+    private void searchAPICall(String searchQuery) {
+        ProgressDialog progress = new ProgressDialog(getContext());
+        progress.setMessage("Searching... ");
+        progress.setIndeterminate(true);
+        progress.show();
 
+        Call<Search> searchCall = apiInterface.getSearchViewArticles(searchQuery);
+        searchCall.enqueue(new Callback<Search>() {
+            @Override
+            public void onResponse(Call<Search> call, Response<Search> response) {
+                try {
+                    search = response.body();
+
+                    if (search != null && search.getArticles() != null) {
+                        articleList.clear();
+                        articleList.addAll(search.getArticles());
+                    }
+                    articleAdapter.notifyDataSetChanged();
+
+                    Toast.makeText(getContext(), "Searched.", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+                progress.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<Search> call, Throwable t) {
+                progress.dismiss();
+                Toast.makeText(getContext(), "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
 
