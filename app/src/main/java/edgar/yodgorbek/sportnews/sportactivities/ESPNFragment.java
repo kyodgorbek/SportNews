@@ -22,7 +22,6 @@ import edgar.yodgorbek.sportnews.model.Article;
 import edgar.yodgorbek.sportnews.model.Espn;
 import edgar.yodgorbek.sportnews.model.Search;
 import edgar.yodgorbek.sportnews.model.SportInterface;
-import edgar.yodgorbek.sportnews.model.SportNews;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +48,6 @@ public class ESPNFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(espnAdapter);
         sportInterface = SportClient.getApiService();
-        //  Call<Espn> call = sportInterface.getEspnArticles();
         fetchInitialArticles();
 
         return view;
@@ -86,12 +84,10 @@ public class ESPNFragment extends Fragment {
     }
 
 
-
-
-
-    public  void doFilter(String searchQuery) {
-      searchAPICall(searchQuery);
+    public void doFilter(String searchQuery) {
+        searchAPICall(searchQuery);
     }
+
     private void searchAPICall(String searchQuery) {
         ProgressDialog progress = new ProgressDialog(getContext());
         progress.setMessage("Searching... ");

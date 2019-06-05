@@ -2,17 +2,11 @@ package edgar.yodgorbek.sportnews.detail;
 
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 

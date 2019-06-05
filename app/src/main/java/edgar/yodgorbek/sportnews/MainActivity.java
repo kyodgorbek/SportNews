@@ -28,28 +28,24 @@ import edgar.yodgorbek.sportnews.sportactivities.TalkSportsFragment;
 
 
 public class MainActivity extends AppCompatActivity {
-    private DrawerLayout mDrawer;
-    private Toolbar toolbar;
-    private NavigationView nvDrawer;
-    private ActionBarDrawerToggle drawerToggle;
-    Context mContext;
-
-    // Default active navigation menu
-    int mActiveMenu;
-
     // TAGS
     public static final int MENU_FIRST = 0;
     public static final int MENU_SECOND = 1;
     public static final int MENU_THIRD = 2;
     public static final int MENU_FOURTH = 3;
-    public static final int MENU_FIFTH = 3;
+    public static final int MENU_FIFTH = 4;
     public static final String TAG = "crash";
+    Context mContext;
+    // Default active navigation menu
+    int mActiveMenu = 0;
+    String searchQuery = "";
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvDrawer;
 
 
     // Action bar search widget
-    SearchView searchView;
-    String searchQuery = "";
-
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +72,8 @@ public class MainActivity extends AppCompatActivity {
         ivHeaderPhoto.setImageResource(R.drawable.ic_sportnews);
         setupDrawerContent(nvDrawer);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, new BBCSportFragment()).commit();
-        fragmentManager.beginTransaction().replace(R.id.flContent, new FoxSportsFragment()).commit();
-        fragmentManager.beginTransaction().replace(R.id.flContent, new TalkSportsFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, new BBCSportFragment(), "" + MENU_FIRST).commit();
+
 
     }
 
@@ -104,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Setup searchView
         setupSearchView(searchView);
-        Log.e(TAG,"crash");
+        Log.e(TAG, "crash");
         return true;
     }
 
@@ -118,37 +113,49 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchQuery = newText;
-
-                // Load search data on respective fragment
-                if (mActiveMenu == MENU_FIRST)   // First
-                {
-                    BBCSportFragment.doFilter(newText);
-                }
-
-                if (mActiveMenu == MENU_SECOND)   // First
-                {
-                    BBCSportFragment.doFilter(newText);
-                }
-
-                if (mActiveMenu == MENU_THIRD)   // First
-                {
-                    BBCSportFragment.doFilter(newText);
-                }
-
-                if (mActiveMenu == MENU_FOURTH)   // First
-                {
-                    BBCSportFragment.doFilter(newText);
-                } else if (mActiveMenu == MENU_FIFTH) // Second
-                {
-                    ESPNFragment.doFilter(newText);
-                }
                 return true;
             }
 
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                //searchView.clearFocus();
+            public boolean onQueryTextSubmit(String newText) {
+                searchQuery = newText;
+
+                Fragment currFragment = getSupportFragmentManager().findFragmentByTag("" + mActiveMenu);
+                // Load search data on respective fragment
+                if (mActiveMenu == MENU_FIRST) {
+                    if (currFragment instanceof BBCSportFragment) {
+                        ((BBCSportFragment) currFragment).doFilter(newText);
+                    }
+
+                }
+
+                if (mActiveMenu == MENU_SECOND)   // First
+                {
+                    if (currFragment instanceof TalkSportsFragment) {
+                        ((TalkSportsFragment) currFragment).doFilter(newText);
+                    }
+
+                }
+
+                if (mActiveMenu == MENU_THIRD) {
+                    if (currFragment instanceof FoxSportsFragment) {
+                        ((FoxSportsFragment) currFragment).doFilter(newText);
+                    }
+
+                }
+
+                if (mActiveMenu == MENU_FOURTH) {
+                    if (currFragment instanceof FootballItaliaFragment) {
+                        ((FootballItaliaFragment) currFragment).doFilter(newText);
+                    }
+
+                } else if (mActiveMenu == MENU_FIFTH) {
+                    if (currFragment instanceof ESPNFragment) {
+                        ((ESPNFragment) currFragment).doFilter(newText);
+                    }
+
+                }
+                searchView.clearFocus();
                 return false;
             }
         });
@@ -178,41 +185,49 @@ public class MainActivity extends AppCompatActivity {
 
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
-        Class fragmentClass = null;
+//        Fragment fragment = null;
+        Fragment fragmentClass = null;
         switch (menuItem.getItemId()) {
             case R.id.bbcsports_fragment:
-                fragmentClass = BBCSportFragment.class;
+                mActiveMenu = 0;
+                fragmentClass = new BBCSportFragment();
                 break;
             case R.id.talksports_fragment:
-                fragmentClass = TalkSportsFragment.class;
+                mActiveMenu = 1;
+                fragmentClass = new TalkSportsFragment();
                 break;
             case R.id.foxsports_fragment:
-                fragmentClass = FoxSportsFragment.class;
+                mActiveMenu = 2;
+                fragmentClass = new FoxSportsFragment();
                 break;
 
             case R.id.footballitalia_fragment:
-                fragmentClass = FootballItaliaFragment.class;
+                mActiveMenu = 3;
+                fragmentClass = new FootballItaliaFragment();
                 break;
 
             case R.id.espn_fragment:
-                fragmentClass = ESPNFragment.class;
+                mActiveMenu = 4;
+                fragmentClass = new ESPNFragment();
                 break;
 
             default:
-
+                mActiveMenu = -1;
+                break;
         }
 
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            fragment = (Fragment) fragmentClass.newInstance();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         // Insert the fragment by replacing any existing fragment
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        if (fragmentClass != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragmentClass, "" + mActiveMenu).commit();
+        }
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
         // Set action bar title

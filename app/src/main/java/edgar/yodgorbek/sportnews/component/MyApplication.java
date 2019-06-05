@@ -3,8 +3,9 @@ package edgar.yodgorbek.sportnews.component;
 import android.app.Activity;
 import android.app.Application;
 
-import edgar.yodgorbek.sportnews.module.ContextModule;
 import com.crashlytics.android.Crashlytics;
+
+import edgar.yodgorbek.sportnews.module.ContextModule;
 import io.fabric.sdk.android.Fabric;
 
 public class MyApplication extends Application {

@@ -14,24 +14,19 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import edgar.yodgorbek.sportnews.R;
 import edgar.yodgorbek.sportnews.adapter.ArticleAdapter;
-
 import edgar.yodgorbek.sportnews.component.ApplicationComponent;
 import edgar.yodgorbek.sportnews.component.BBCSportFragmentComponent;
-
-
 import edgar.yodgorbek.sportnews.internet.SportClient;
 import edgar.yodgorbek.sportnews.model.Article;
 import edgar.yodgorbek.sportnews.model.Search;
 import edgar.yodgorbek.sportnews.model.SportInterface;
 import edgar.yodgorbek.sportnews.model.SportNews;
 import edgar.yodgorbek.sportnews.module.BBCFragmentContextModule;
-import edgar.yodgorbek.sportnews.module.ContextModule;
 import edgar.yodgorbek.sportnews.qualifier.ActivityContext;
 import edgar.yodgorbek.sportnews.qualifier.ApplicationContext;
 import retrofit2.Call;
@@ -43,18 +38,16 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
 
     public List<Article> articleList = new ArrayList<>();
 
-    public List<Article> origArticleList = new ArrayList<>();
 
     @ActivityContext
     public Context activityContext;
-    private Search search;
     @ApplicationContext
     public Context mContext;
-
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     BBCSportFragmentComponent bbcSportFragmentComponent;
     BBCFragmentContextModule bbcFragmentContextModule;
+    private Search search;
     private SportNews sportNews;
     private ArticleAdapter articleAdapter;
     private SportInterface apiInterface;
