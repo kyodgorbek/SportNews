@@ -40,7 +40,9 @@ import retrofit2.Response;
 public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickListener {
 
     public static List<Article> articleList = new ArrayList<>();
-    public List<Search> searchList = new ArrayList<>();
+
+    public static List<Article> origArticleList = new ArrayList<>();
+
     @ActivityContext
     public Context activityContext;
     Search search;
@@ -53,6 +55,7 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
     BBCFragmentContextModule bbcFragmentContextModule;
     private SportNews sportNews;
     private static ArticleAdapter articleAdapter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +71,7 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
                     sportNews = response.body();
                     if (sportNews != null && sportNews.getArticles() != null) {
                         articleList.addAll(sportNews.getArticles());
+
                     }
                     articleAdapter = new ArticleAdapter(articleList, sportNews);
                     ApplicationComponent applicationComponent;
@@ -86,30 +90,33 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
             }
         });
 
-
-        SportInterface searchInterface = SportClient.getApiService();
-        Call<Search> searchCall = searchInterface.getSearchViewArticles("q");
-         searchCall.enqueue(new Callback<Search>() {
-             @Override
-             public void onResponse(Call<Search> call, Response<Search> response) {
-                 search = response.body();
-
-                 if (search != null && search.getArticles() != null) {
-                     articleList.addAll(search.getArticles());
-                 }
-
-                 articleAdapter = new ArticleAdapter(articleList, search);
-                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                 recyclerView.setLayoutManager(layoutManager);
-                 recyclerView.setAdapter(articleAdapter);
-             }
-
-             @Override
-             public void onFailure(Call<Search> call, Throwable t) {
-
-             }
-         });
-
+//        SportInterface searchInterface = SportClient.getApiService();
+//        Call<Search> searchCall = searchInterface.getSearchViewArticles("q");
+//        searchCall.enqueue(new Callback<Search>() {
+//            @Override
+//            public void onResponse(Call<Search> call, Response<Search> response) {
+//                search = response.body();
+//
+//                if (search != null && search.getArticles() != null) {
+//                    articleList.clear();
+//                    articleList.addAll(search.getArticles());
+//                }
+//
+//                if(articleAdapter != null){
+//                    articleAdapter.notifyDataSetChanged();
+//                } else {
+//                    articleAdapter = new ArticleAdapter(articleList, search);
+//                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+//                    recyclerView.setLayoutManager(layoutManager);
+//                    recyclerView.setAdapter(articleAdapter);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Search> call, Throwable t) {
+//
+//            }
+//        });
 
         return view;
 
@@ -121,13 +128,15 @@ public class BBCSportFragment extends Fragment implements ArticleAdapter.ClickLi
     }
 
     public static void doFilter(String searchQuery) {
-     articleList.clear();
-
-     articleAdapter.notifyDataSetChanged();
-
+        searchQuery = searchQuery.toLowerCase();
+        for (Article article : origArticleList) {
+            final String text = article.getTitle();
+            if (text.equals(searchQuery))
+                articleList.add(article);
+        }
+        articleAdapter.notifyDataSetChanged();
     }
+
+
 }
-
-
-
 
