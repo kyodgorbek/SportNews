@@ -33,11 +33,10 @@ class ArticleAdapter: RecyclerView.Adapter<CustomViewHolder> {
     private var myClipboard: ClipboardManager? = null
     private var myClip: ClipData? = null
 
-    constructor(articles:List<Article>, sportNews: SportNews) {
+    constructor(articles:List<Article>) {
         this.articles = articles
     }
-    constructor(clickListener:ClickListener) {}
-    constructor(articleList:List<Article>, search: Search) {}
+
     @NonNull
     override fun onCreateViewHolder(@NonNull viewGroup: ViewGroup, i:Int): CustomViewHolder {
         val itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.article_list, null)
@@ -74,12 +73,12 @@ class ArticleAdapter: RecyclerView.Adapter<CustomViewHolder> {
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, articleTitle)
             v.getContext().startActivity((Intent.createChooser(sharingIntent, "Share using")))
         })
-        customViewHolder.articleFavorite.setOnClickListener({ v->
+        customViewHolder.articleFavorite.setOnClickListener { v->
             myClipboard = v.getContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             myClip = ClipData.newPlainText("label", customViewHolder.articleTitle.getText().toString())
             myClipboard!!.setPrimaryClip(myClip)
             Toast.makeText(v.getContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show()
-        })
+        }
     }
     override fun getItemCount(): Int {
         if (articles == null) return 0
@@ -89,15 +88,15 @@ class ArticleAdapter: RecyclerView.Adapter<CustomViewHolder> {
     interface ClickListener
     inner class CustomViewHolder(view: View):RecyclerView.ViewHolder(view) {
         @BindView(R.id.articleAuthor)
-        internal lateinit var articleAuthor: TextView
+         lateinit var articleAuthor: TextView
         @BindView(R.id.articleTitle)
-        internal lateinit var articleTitle:TextView
+         lateinit var articleTitle:TextView
         @BindView(R.id.articleImage)
-        internal lateinit var articleImage: ImageView
+         lateinit var articleImage: ImageView
         @BindView(R.id.articleTime)
-        internal lateinit var articleTime:TextView
+         lateinit var articleTime:TextView
         @BindView(R.id.articleShare)
-        internal lateinit var articleShare: ImageButton
+         lateinit var articleShare: ImageButton
         @BindView(R.id.articleFavorite)
         internal lateinit var articleFavorite:ImageButton
         init{

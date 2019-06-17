@@ -11,7 +11,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
-
+apply plugin: 'kotlin-kapt'
 repositories {
     maven { url 'https://maven.fabric.io/public' }
     mavenCentral()
@@ -40,8 +40,8 @@ android {
         applicationId "edgar.yodgorbek.yangiliklar"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -65,8 +65,9 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.jakewharton:butterknife:8.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
+    implementation "com.jakewharton:butterknife:8.8.1"
+    kapt "com.jakewharton:butterknife-compiler:8.8.1"
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.google.dagger:dagger:2.15'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0'

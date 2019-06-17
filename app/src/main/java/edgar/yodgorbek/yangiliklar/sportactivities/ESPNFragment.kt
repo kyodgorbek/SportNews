@@ -29,9 +29,9 @@ class ESPNFragment : Fragment() {
 
     var articleList: MutableList<Article> = ArrayList()
     @BindView(R.id.recycler_view)
-    internal var recyclerView: RecyclerView? = null
+    lateinit var recyclerView: RecyclerView
     private var espn: Espn? = null
-    private var espnAdapter: EspnAdapter? = null
+    lateinit var espnAdapter: EspnAdapter
     private var search: Search? = null
 
     private var sportInterface: SportInterface? = null
@@ -43,8 +43,8 @@ class ESPNFragment : Fragment() {
         ButterKnife.bind(this, view)
         espnAdapter = EspnAdapter(articleList, espn!!)
         val layoutManager = LinearLayoutManager(context)
-        recyclerView!!.layoutManager = layoutManager
-        recyclerView!!.adapter = espnAdapter
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = espnAdapter
         sportInterface = SportClient.apiService
         fetchInitialArticles()
 
@@ -64,7 +64,7 @@ class ESPNFragment : Fragment() {
                 }
                 if (espn!!.espnArticles != null) {
                     articleList.clear()
-                    articleList.addAll(espn!!.espnArticles)
+                    espn!!.espnArticles?.let { articleList.addAll(it) }
                 }
                 espnAdapter!!.notifyDataSetChanged()
 
@@ -98,7 +98,7 @@ class ESPNFragment : Fragment() {
 
                     if (search != null && search!!.articles != null) {
                         articleList.clear()
-                        articleList.addAll(search!!.articles)
+                        search!!.articles?.let { articleList.addAll(it) }
                     }
                     espnAdapter!!.notifyDataSetChanged()
 

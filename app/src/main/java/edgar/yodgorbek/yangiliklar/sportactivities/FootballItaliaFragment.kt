@@ -30,9 +30,9 @@ class FootballItaliaFragment : Fragment() {
 
     var articleList: MutableList<Article> = ArrayList()
     @BindView(R.id.recycler_view)
-    internal var recyclerView: RecyclerView? = null
+    lateinit var recyclerView: RecyclerView
     private var footballItalia: FootballItalia? = null
-    private var footballItaliaAdapter: FootballItaliaAdapter? = null
+    lateinit var footballItaliaAdapter: FootballItaliaAdapter
     private var sportInterface: SportInterface? = null
     private var search: Search? = null
 
@@ -45,8 +45,8 @@ class FootballItaliaFragment : Fragment() {
         sportInterface = SportClient.apiService
         footballItaliaAdapter = FootballItaliaAdapter(articleList, footballItalia!!)
         val layoutManager = LinearLayoutManager(context)
-        recyclerView!!.layoutManager = layoutManager
-        recyclerView!!.adapter = footballItaliaAdapter
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = footballItaliaAdapter
         fetchInitialArticles()
         return view
     }
@@ -65,7 +65,7 @@ class FootballItaliaFragment : Fragment() {
                 }
                 if (footballItalia!!.foxArticles != null) {
                     articleList.clear()
-                    articleList.addAll(footballItalia!!.foxArticles)
+                    footballItalia!!.foxArticles?.let { articleList.addAll(it) }
                 }
                 footballItaliaAdapter!!.notifyDataSetChanged()
                 progress.dismiss()
@@ -98,7 +98,7 @@ class FootballItaliaFragment : Fragment() {
 
                     if (search != null && search!!.articles != null) {
                         articleList.clear()
-                        articleList.addAll(search!!.articles)
+                        search!!.articles?.let { articleList.addAll(it) }
                     }
                     footballItaliaAdapter!!.notifyDataSetChanged()
 

@@ -11,7 +11,7 @@ class Source {
     @PrimaryKey
     @SerializedName("id")
     @Expose
-    var id: String
+    lateinit var id: String
     @SerializedName("name")
     @Expose
     var name: String? = null

@@ -29,9 +29,9 @@ class FoxSportsFragment : Fragment() {
 
     var articleList: MutableList<Article> = ArrayList()
     @BindView(R.id.recycler_view)
-    internal var recyclerView: RecyclerView? = null
+    lateinit var recyclerView: RecyclerView
     private var sportNews: FoxSports? = null
-    private var foxSportsAdapter: FoxSportsAdapter? = null
+    lateinit var foxSportsAdapter: FoxSportsAdapter
     private var sportInterface: SportInterface? = null
     private var search: Search? = null
 
@@ -42,8 +42,8 @@ class FoxSportsFragment : Fragment() {
         sportInterface = SportClient.apiService
         foxSportsAdapter = FoxSportsAdapter(articleList, sportNews!!)
         val layoutManager = LinearLayoutManager(context)
-        recyclerView!!.layoutManager = layoutManager
-        recyclerView!!.adapter = foxSportsAdapter
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = foxSportsAdapter
         fetchInitialArticles()
         return view
     }
@@ -63,7 +63,7 @@ class FoxSportsFragment : Fragment() {
                 }
                 if (sportNews!!.foxArticles != null) {
                     articleList.clear()
-                    articleList.addAll(sportNews!!.foxArticles)
+                    sportNews!!.foxArticles?.let { articleList.addAll(it) }
                 }
                 foxSportsAdapter!!.notifyDataSetChanged()
                 progress.dismiss()
@@ -97,7 +97,7 @@ class FoxSportsFragment : Fragment() {
 
                     if (search != null && search!!.articles != null) {
                         articleList.clear()
-                        articleList.addAll(search!!.articles)
+                        search!!.articles?.let { articleList.addAll(it) }
                     }
                     foxSportsAdapter!!.notifyDataSetChanged()
 

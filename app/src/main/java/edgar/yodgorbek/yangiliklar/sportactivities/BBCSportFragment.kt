@@ -2,7 +2,6 @@ package edgar.yodgorbek.yangiliklar.sportactivities
 
 
 import android.app.ProgressDialog
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -18,16 +17,13 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import edgar.yodgorbek.yangiliklar.R
 import edgar.yodgorbek.yangiliklar.adapter.ArticleAdapter
-import edgar.yodgorbek.yangiliklar.component.ApplicationComponent
-import edgar.yodgorbek.yangiliklar.component.BBCSportFragmentComponent
+
 import edgar.yodgorbek.yangiliklar.internet.SportClient
 import edgar.yodgorbek.yangiliklar.model.Article
 import edgar.yodgorbek.yangiliklar.model.Search
 import edgar.yodgorbek.yangiliklar.model.SportInterface
 import edgar.yodgorbek.yangiliklar.model.SportNews
-import edgar.yodgorbek.yangiliklar.module.BBCFragmentContextModule
-import edgar.yodgorbek.yangiliklar.qualifier.ActivityContext
-import edgar.yodgorbek.yangiliklar.qualifier.ApplicationContext
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,19 +32,11 @@ import retrofit2.Response
 class BBCSportFragment : Fragment(), ArticleAdapter.ClickListener {
 
     var articleList: MutableList<Article> = ArrayList()
-
-
-    @ActivityContext
-    var activityContext: Context? = null
-    @ApplicationContext
-    var mContext: Context? = null
     @BindView(R.id.recycler_view)
-    internal var recyclerView: RecyclerView? = null
-    internal var bbcSportFragmentComponent: BBCSportFragmentComponent? = null
-    internal var bbcFragmentContextModule: BBCFragmentContextModule? = null
+    lateinit var recyclerView: RecyclerView
     private var search: Search? = null
     private var sportNews: SportNews? = null
-    private var articleAdapter: ArticleAdapter? = null
+    lateinit var articleAdapter: ArticleAdapter
     private var apiInterface: SportInterface? = null
 
 
@@ -57,10 +45,10 @@ class BBCSportFragment : Fragment(), ArticleAdapter.ClickListener {
         val view = inflater.inflate(R.layout.fragment_bbcsport, container, false)
         ButterKnife.bind(this, view)
 
-        articleAdapter = ArticleAdapter(articleList, sportNews!!)
+        articleAdapter = ArticleAdapter(articleList)
         val layoutManager = LinearLayoutManager(context)
-        recyclerView!!.layoutManager = layoutManager
-        recyclerView!!.adapter = articleAdapter
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = articleAdapter
 
         apiInterface = SportClient.apiService
 
@@ -81,7 +69,7 @@ class BBCSportFragment : Fragment(), ArticleAdapter.ClickListener {
                     sportNews = response.body()
                     if (sportNews!!.articles != null) {
                         articleList.clear()
-                        articleList.addAll(sportNews!!.articles)
+                        sportNews!!.articles?.let { articleList.addAll(it) }
                     }
                     articleAdapter!!.notifyDataSetChanged()
                 }
@@ -95,9 +83,7 @@ class BBCSportFragment : Fragment(), ArticleAdapter.ClickListener {
         })
     }
 
-    private fun getContext(applicationComponent: ApplicationComponent): Context? {
-        return null
-    }
+
 
     fun doFilter(searchQuery: String) {
         searchAPICall(searchQuery)
@@ -118,7 +104,7 @@ class BBCSportFragment : Fragment(), ArticleAdapter.ClickListener {
 
                     if (search != null && search!!.articles != null) {
                         articleList.clear()
-                        articleList.addAll(search!!.articles)
+                        search!!.articles?.let { articleList.addAll(it) }
                     }
                     articleAdapter!!.notifyDataSetChanged()
 

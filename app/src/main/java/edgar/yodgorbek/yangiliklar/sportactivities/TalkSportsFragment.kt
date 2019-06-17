@@ -30,9 +30,9 @@ class TalkSportsFragment : Fragment() {
 
     var articleList: MutableList<Article> = ArrayList()
     @BindView(R.id.recycler_view)
-    internal var recyclerView: RecyclerView? = null
+    lateinit  var recyclerView: RecyclerView
     private var talkSports: TalkSports? = null
-    private var talkSportAdapter: TalkSportAdapter? = null
+    lateinit var talkSportAdapter: TalkSportAdapter
     private var sportInterface: SportInterface? = null
     private var search: Search? = null
 
@@ -43,8 +43,8 @@ class TalkSportsFragment : Fragment() {
         sportInterface = SportClient.apiService
         talkSportAdapter = TalkSportAdapter(articleList, talkSports!!)
         val layoutManager = LinearLayoutManager(context)
-        recyclerView!!.layoutManager = layoutManager
-        recyclerView!!.adapter = talkSportAdapter
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = talkSportAdapter
         fetchInitialArticles()
 
 
@@ -66,7 +66,7 @@ class TalkSportsFragment : Fragment() {
                 }
                 if (talkSports!!.sportArticles != null) {
                     articleList.clear()
-                    articleList.addAll(talkSports!!.sportArticles)
+                    talkSports!!.sportArticles?.let { articleList.addAll(it) }
                 }
                 talkSportAdapter!!.notifyDataSetChanged()
                 progress.dismiss()
@@ -99,7 +99,7 @@ class TalkSportsFragment : Fragment() {
 
                     if (search != null && search!!.articles != null) {
                         articleList.clear()
-                        articleList.addAll(search!!.articles)
+                        search!!.articles?.let { articleList.addAll(it) }
                     }
                     talkSportAdapter!!.notifyDataSetChanged()
 

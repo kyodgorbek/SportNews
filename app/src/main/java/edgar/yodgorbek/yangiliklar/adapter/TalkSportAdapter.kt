@@ -101,17 +101,17 @@ class TalkSportAdapter(articles: List<Article>, sportNews: TalkSports) : Recycle
 
     inner class CustomViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         @BindView(R.id.articleAuthor)
-        internal var articleAuthor: TextView? = null
+        lateinit var articleAuthor: TextView
         @BindView(R.id.articleTitle)
-        internal var articleTitle: TextView? = null
+        lateinit var articleTitle: TextView
         @BindView(R.id.articleImage)
-        internal var articleImage: ImageView? = null
+        lateinit var articleImage: ImageView
         @BindView(R.id.articleTime)
-        internal var articleTime: TextView? = null
+        lateinit var articleTime: TextView
         @BindView(R.id.articleShare)
-        internal var articleShare: ImageButton? = null
+        lateinit var articleShare: ImageButton
         @BindView(R.id.articleFavorite)
-        internal var articleFavorite: ImageButton? = null
+        lateinit var articleFavorite: ImageButton
 
         init {
             ButterKnife.bind(this, view)

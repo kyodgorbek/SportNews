@@ -14,7 +14,7 @@ class Article {
     @PrimaryKey
     @SerializedName("source")
     @Expose
-    var source: Source
+    lateinit var source: Source
     var source_id: Int = 0
     @SerializedName("author")
     @Expose

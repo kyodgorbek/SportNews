@@ -19,10 +19,10 @@ class DetailActivity : AppCompatActivity() {
 
 
     @BindView(R.id.toolbar)
-    internal var toolbar: Toolbar? = null
+    lateinit var toolbar: Toolbar
 
     @BindView(R.id.webView)
-    internal var webView: WebView? = null
+    lateinit var webView: WebView
 
     @SuppressLint("SetJavaScriptEnabled", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
