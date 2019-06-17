@@ -8,10 +8,13 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
 }
 
 
@@ -34,7 +37,7 @@ android {
 
     compileSdkVersion 28
     defaultConfig {
-        applicationId "edgar.yodgorbek.sportnews"
+        applicationId "edgar.yodgorbek.yangiliklar"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
@@ -72,5 +75,6 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     implementation 'com.crashlytics.sdk.android:answers:1.4.7'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }

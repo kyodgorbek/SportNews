@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="edgar.yodgorbek.sportnews">
+    package="edgar.yodgorbek.yangiliklar">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:name=".component.MyApplication"
+        android:name="edgar.yodgorbek.yangiliklar.component.MyApplication"
         android:allowBackup="true"
         android:appComponentFactory="@string/app_name"
         android:icon="@mipmap/ic_launcher"
@@ -16,16 +16,17 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name="edgar.yodgorbek.yangiliklar.detail.DetailActivity" />
+        <activity
+            android:name=".sportactivities.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
         </activity>
-
-        <activity android:name=".detail.DetailActivity" />
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="4ce03a6d6eb471237621bb0efc25b4d5874ceaf0" />
